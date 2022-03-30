@@ -1,9 +1,14 @@
 import random
-
+from enum import Enum
 GRID_SIZE = 8
 NUMBER_OF_ROUND = 20
 NUMBER_OF_SHIP = 2
 SHIPS = []
+
+class playBoardStatus(Enum):
+    O = 0
+    S = 2
+    X = 3
 
 class ship:
     def __init__(self, gridSize,ID):
@@ -11,7 +16,6 @@ class ship:
         self.y = random.randrange(0,gridSize)
         self.ID = ID
         self.hit = False
-
     def checkHit(self, inputX, inputY):
         if(self.x == inputX and self.y == inputY):
             self.hit = True
@@ -19,9 +23,9 @@ class ship:
         else:
             d = abs(self.x - inputX) + abs(self.y - inputY)
             if(d < 2):
-                print("--Ship " + str(self.ID) + " Warm--")
-            elif (d >= 2 and d < 4):
                 print("--Ship " + str(self.ID) + " Hot--")
+            elif (d >= 2 and d < 4):
+                print("--Ship " + str(self.ID) + " Warm--")
             else:
                 print("--Ship " + str(self.ID) + " Cold--")
                 
@@ -47,12 +51,7 @@ class playboard:
         for i in range(0, GRID_SIZE):
             print(str(i+1) + str(" "), end = " ")
             for j in range(0, GRID_SIZE):
-                if(self.grid[i][j] == 2):
-                     print('S', end=" ")
-                elif(self.grid[i][j] == 3):
-                     print('X', end=" ")
-                else:
-                     print(0, end=" ")
+                print(playBoardStatus(self.grid[i][j]).name, end = " ")
             print()
         print()
 
